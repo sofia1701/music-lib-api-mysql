@@ -1,12 +1,13 @@
 /* src/routes/artist.js */
 
 const express = require('express');
-const artistControllers = require('../controllers/artists');
+const artistController = require('../controllers/artists');
 
 
 const router = express.Router();
 
+router.post('/', artistController.create);
 
-router.post('/', artistControllers.create);
+router.get('/',  artistController.listArtists);
 
 module.exports = router;
