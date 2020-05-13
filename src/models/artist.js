@@ -1,3 +1,5 @@
+/* src/models/artist.js */
+
 module.exports = (sequelize, DataTypes) => {
   const schema = {
     name: DataTypes.STRING,
