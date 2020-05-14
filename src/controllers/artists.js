@@ -15,9 +15,9 @@ exports.getArtistById = (req, res) => {
   Artist.findOne({ where: { id: artistId} })
   .then(artist => {
     if(!artist) {
-      res.status(404).json({ error: 'The artist could not be found.' });
+      return res.status(404).json({ error: 'The artist could not be found.' });
     }
-    res.status(200).json(artist);
+    return res.status(200).json(artist);
   });
 };
 
@@ -26,8 +26,8 @@ exports.updatesArtistById = (req, res) => {
   Artist.update(req.body, { where: { id: artistId } })
   .then(([updatedArtist]) => {
     if(!updatedArtist) {
-      res.status(404).json({ error: 'The artist could not be found.' });
+      return res.status(404).json({ error: 'The artist could not be found.' });
     }
-    res.status(200).json(updatedArtist);
+    return res.status(200).json(updatedArtist);
   });
 };
