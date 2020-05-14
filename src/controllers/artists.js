@@ -12,7 +12,11 @@ exports.listArtists = (req, res) => {
 
 exports.getArtistById = (req, res) => {
   const { artistId } = req.params;
-  Artist.findOne({ where: { id: artistId} }).then(artist => {
+  Artist.findOne({ where: { id: artistId} })
+  .then(artist => {
+    if(!artist) {
+      res.status(404).json({ error: 'The artist could not be found.' });
+    }
     res.status(200).json(artist);
-  });
+  })
 };
