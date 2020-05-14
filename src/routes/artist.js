@@ -10,4 +10,8 @@ router.post('/', artistController.create);
 
 router.get('/',  artistController.listArtists);
 
+router.get('/:artistId', artistController.getArtistById);
+
 module.exports = router;
+
+//do a put request do replace info!

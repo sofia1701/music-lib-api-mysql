@@ -9,3 +9,10 @@ exports.create = (req, res) => {
 exports.listArtists = (req, res) => {
   Artist.findAll().then(artists => res.status(200).json(artists));
 };
+
+exports.getArtistById = (req, res) => {
+  const { artistId } = req.params;
+  Artist.findByPk(artistId).then(artist => {
+    res.status(200).json(artist);
+  });
+};
