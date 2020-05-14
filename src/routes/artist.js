@@ -12,6 +12,7 @@ router.get('/',  artistController.listArtists);
 
 router.get('/:artistId', artistController.getArtistById);
 
+router.patch('/:artistId', artistController.updatesArtistById);
+
 module.exports = router;
 
-//do a put request do replace info!

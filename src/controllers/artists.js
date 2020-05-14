@@ -20,3 +20,9 @@ exports.getArtistById = (req, res) => {
     res.status(200).json(artist);
   })
 };
+
+exports.updatesArtistById = (req, res) => {
+  const { artistId } = req.params;
+  Artist.update(req.body, { where: { id: artistId } }).then(
+    updatedArtist => res.status(200).json(updatedArtist));
+};
