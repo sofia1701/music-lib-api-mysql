@@ -12,7 +12,7 @@ exports.listArtists = (req, res) => {
 
 exports.getArtistById = (req, res) => {
   const { artistId } = req.params;
-  Artist.findByPk(artistId).then(artist => {
+  Artist.findOne({ where: { id: artistId} }).then(artist => {
     res.status(200).json(artist);
   });
 };
