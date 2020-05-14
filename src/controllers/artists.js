@@ -18,16 +18,16 @@ exports.getArtistById = (req, res) => {
       res.status(404).json({ error: 'The artist could not be found.' });
     }
     res.status(200).json(artist);
-  })
+  });
 };
 
 exports.updatesArtistById = (req, res) => {
   const { artistId } = req.params;
-  Artist.update(req.body, { where: { id: artistId } }).then(
-    updatedArtist => {
+  Artist.update(req.body, { where: { id: artistId } })
+  .then(([updatedArtist]) => {
     if(!updatedArtist) {
       res.status(404).json({ error: 'The artist could not be found.' });
     }
     res.status(200).json(updatedArtist);
-    });
+  });
 };
