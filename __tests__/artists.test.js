@@ -106,6 +106,20 @@ describe('/artists', () => {
           });
       });
 
+      it('updates artist name by id', (done) => {
+        const artist = artists[0];
+        request(app)
+          .patch(`/artists/${artist.id}`)
+          .send({ name: 'MGMT' })
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            Artist.findByPk(artist.id, { raw: true }).then((updatedArtist) => {
+              expect(updatedArtist.name).to.equal('MGMT');
+              done();
+            });
+          });
+      });
+
       it('returns a 404 if the artist does not exist', (done) => {
         request(app)
           .patch('/artists/12345')

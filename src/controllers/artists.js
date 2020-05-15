@@ -31,3 +31,8 @@ exports.updatesArtistById = (req, res) => {
     return res.status(200).json(updatedArtist);
   });
 };
+
+
+/*When a return statement is used in a function body, 
+the execution of the function is stopped. If specified, 
+a given value is returned to the function caller.*/
