@@ -32,6 +32,13 @@ exports.updatesArtistById = (req, res) => {
   });
 };
 
+exports.deletesArtist = (req, res) => {
+  const { artistId } = req.params;
+  Artist.destroy({ where: { id: artistId } })
+  .then(updatedArtist => {
+    return res.status(204).json(updatedArtist);
+  })
+};
 
 /*When a return statement is used in a function body, 
 the execution of the function is stopped. If specified, 

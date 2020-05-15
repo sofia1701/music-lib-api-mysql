@@ -14,5 +14,7 @@ router.get('/:artistId', artistController.getArtistById);
 
 router.patch('/:artistId', artistController.updatesArtistById);
 
+router.delete('/:artistId', artistController.deletesArtist);
+
 module.exports = router;
 
