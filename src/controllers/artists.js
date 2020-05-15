@@ -36,6 +36,9 @@ exports.deletesArtist = (req, res) => {
   const { artistId } = req.params;
   Artist.destroy({ where: { id: artistId } })
   .then(updatedArtist => {
+    if(!updatedArtist) {
+      return res.status(404).json({ error: 'The artist could not be found.' })
+    }
     return res.status(204).json(updatedArtist);
   })
 };
