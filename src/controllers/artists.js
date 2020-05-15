@@ -2,7 +2,7 @@
 
 const { Artist } = require('../sequelize');
 
-exports.create = (req, res) => {
+exports.createsArtist = (req, res) => {
   Artist.create(req.body).then(user => res.status(201).json(user));
 };
 
