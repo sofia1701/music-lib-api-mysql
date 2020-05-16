@@ -12,12 +12,22 @@ exports.createAlbum = (req, res) => {
     }else{
       Album.create(req.body)
       .then(album => {
-        album.setArtist(artistId)
-        .then(linkedAlbum => {
-          res.status(201).json(linkedAlbum);
+        return album.setArtist(artistId)
+        .then(savedAlbum => {
+          return res.status(201).json(savedAlbum);
         });
      });
     }
-  })
-  
+  })  
+};
+
+exports.listAllAlbums = (req, res) => {
+  //const { artistId } = req.params;
+  Album.findAll().then(albums => res.status(200).json(albums));
 }
+
+exports.listAlbumsByArtistId = (req, res) => {
+  const { artistId } = req.params;
+  Album.findOne({ where: { artistId} })
+  .then(albums => res.status(200).json(albums));     
+};

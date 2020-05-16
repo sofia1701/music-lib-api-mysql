@@ -67,4 +67,49 @@ describe('/albums', () => {
         });
     });
   });
+
+  describe('with albums in the database', () => {
+    let albums;
+    beforeEach((done) => {
+      Promise.all([
+        Album.create({ name: 'Physical Graffiti', year: 1975  }),
+        Album.create({ name: 'Brothers in Arms', year: 1985 }),
+      ]).then((documents) => {
+        albums = documents;
+        done();
+      })
+    })
+
+    describe('GET /artists/:artistId/albums', () => {
+      it('gets all albums by artist', (done) => {
+        request(app)
+          .get(`/artists/${artist.id}/albums`)
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body.length).to.equal(2);
+            res.body.forEach((album) => {
+              const expected = albums.find((a) => a.id === album.id);
+              expect(album.name).to.equal(expected.name);
+              expect(album.year).to.equal(expected.year);
+            });
+            done();
+          });
+      });
+    }) 
+
+    describe('GET /artists/:artistId/albums', () => {
+      it('gets album record by artist id', (done) => {
+        const album = albums[0];
+        request(app)
+          .get(`/artists/${artist.id}/albums`)
+          .then((res) => {
+            expect(res.status).to.equal(200);
+              expect(album.name).to.equal(album.name);
+              expect(album.year).to.equal(album.year);
+              done();
+          });
+      });
+    })  
+
+  });
 });
