@@ -72,8 +72,8 @@ describe('/albums', () => {
     let albums;
     beforeEach((done) => {
       Promise.all([
-        Album.create({ name: 'Physical Graffiti', year: 1975  }),
-        Album.create({ name: 'Brothers in Arms', year: 1985 }),
+        Album.create({ name: 'Physical Graffiti', year: 1975, artistId: artist.id }),
+        Album.create({ name: 'Brothers in Arms', year: 1985, artistId: artist.id }),
       ]).then((documents) => {
         albums = documents;
         done();
@@ -91,6 +91,7 @@ describe('/albums', () => {
               const expected = albums.find((a) => a.id === album.id);
               expect(album.name).to.equal(expected.name);
               expect(album.year).to.equal(expected.year);
+              expect(album.artistId).to.equal(artist.id);
             });
             done();
           });
