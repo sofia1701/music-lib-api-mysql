@@ -97,19 +97,5 @@ describe('/albums', () => {
       });
     }) 
 
-    describe('GET /artists/:artistId/albums', () => {
-      it('gets album record by artist id', (done) => {
-        const album = albums[0];
-        request(app)
-          .get(`/artists/${artist.id}/albums`)
-          .then((res) => {
-            expect(res.status).to.equal(200);
-              expect(album.name).to.equal(album.name);
-              expect(album.year).to.equal(album.year);
-              done();
-          });
-      });
-    })  
-
   });
 });
