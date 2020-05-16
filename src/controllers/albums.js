@@ -23,6 +23,14 @@ exports.createAlbum = (req, res) => {
 
 exports.listAllAlbumsByArtist = (req, res) => {
   const { artistId } = req.params;
-  Album.findAll({ where: { artistId} }).then(albums => res.status(200).json(albums));
-}
+  Artist.findOne({ where: { id: artistId} })
+  .then(artist => {
+    if(!artist) {
+      return res.status(404).json({ error: 'The artist could not be found.' });
+    }else{
+     Album.findAll({ where: { artistId} }).then(albums => res.status(200).json(albums));
+    };
+  })
+};
+
 

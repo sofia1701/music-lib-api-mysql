@@ -96,6 +96,15 @@ describe('/albums', () => {
             done();
           });
       });
+      it('returns a 404 if the artist does not exist', (done) => {
+        request(app)
+          .get('/artists/12345/albums')
+          .then((res) => {
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The artist could not be found.');
+            done();
+          });
+      });
     }) 
 
   });
