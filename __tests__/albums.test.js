@@ -123,6 +123,21 @@ describe('/albums', () => {
           })
 
       })
+
+      it('updates album name by album id', (done) => {
+        const album = albums[0];
+        request(app)
+          .patch(`/artists/${album.id}/albums`)
+          .send({ name: 'The slow rush' })
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            Album.findByPk(album.id, { raw: true })
+            .then((updatedAlbum) => {
+              expect(updatedAlbum.name).to.equal('The slow rush');
+              done();
+            })
+          })
+      })
     })
 
 
