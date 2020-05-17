@@ -106,6 +106,25 @@ describe('/albums', () => {
           });
       });
     }) 
+     
+    describe('PATCH /artists/:albumId/albums', () => {
+      it('updates album year by album id', (done) => {
+        const album = albums[0];
+        request(app)
+          .patch(`/artists/${album.id}/albums`)
+          .send({ year: 2020 })
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            Album.findByPk(album.id, { raw: true })
+            .then((updatedAlbum) => {
+              expect(updatedAlbum.year).to.equal(2020);
+              done();
+            })
+          })
+
+      })
+    })
+
 
   });
 });

@@ -21,4 +21,7 @@ router.post('/:artistId/albums', albumController.createAlbum);
 
 router.get('/:artistId/albums', albumController.listAllAlbumsByArtist);
 
+router.patch('/:albumId/albums', albumController.updatesAlbumByID);
+
+
 module.exports = router;

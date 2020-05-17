@@ -12,7 +12,4 @@ app.use('/artists', artistRouter);
 
 module.exports = app;
 
-
-
-//docker run -d -p 3306:3306 --name music_library_mysql -e MYSQL_ROOT_PASSWORD=super mysql
 //docker start music_library_mysql

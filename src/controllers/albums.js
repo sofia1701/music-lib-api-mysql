@@ -33,4 +33,12 @@ exports.listAllAlbumsByArtist = (req, res) => {
   })
 };
 
+exports.updatesAlbumByID = (req, res) => {
+  const { albumId } = req.params;
+  Album.update(req.body, {where: { id: albumId }})
+  .then(([updatedAlbum]) => {
+    return res.status(200).json(updatedAlbum);
+  })
+}
+
 
