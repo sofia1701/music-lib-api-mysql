@@ -162,8 +162,16 @@ describe('/albums', () => {
             })
           })
       })
-    })
+      it('returns a 404 if album does not exist', (done) => {
+        request(app)
+          .delete('/artists/1280/albums')
+          .then((res) => {
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The album could not be found');
+            done();
+          })
+      })
+    });
 
   });
-
 });

@@ -48,6 +48,9 @@ exports.deletesAlbumById = (req, res) => {
   const { albumId } = req.params;
   Album.destroy({ where: { id: albumId }})
   .then(updatedAlbum => {
+    if(!updatedAlbum) {
+      return res.status(404).json({ error: 'The album could not be found' })
+    }
     return res.status(204).json(updatedAlbum);
   })
 };
