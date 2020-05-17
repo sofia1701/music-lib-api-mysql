@@ -148,6 +148,22 @@ describe('/albums', () => {
       })
     })
 
+    describe('DELETE /artists/:albumId/albums', () => {
+      it('deletes album record by id', (done) => {
+        const album = albums[0];
+        request(app)
+          .delete(`/artists/${album.id}/albums`)
+          .then((res) => {
+            expect(res.status).to.equal(204);
+            Album.findByPk(album.id, { raw: true })
+            .then((updatedAlbum) => {
+              expect(updatedAlbum).to.equal(null);
+              done();
+            })
+          })
+      })
+    })
+
   });
-  
+
 });
