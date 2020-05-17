@@ -121,9 +121,7 @@ describe('/albums', () => {
               done();
             })
           })
-
       })
-
       it('updates album name by album id', (done) => {
         const album = albums[0];
         request(app)
@@ -138,8 +136,18 @@ describe('/albums', () => {
             })
           })
       })
+      it('returns a 404 if the album does not exist', (done) => {
+        request(app)
+          .patch('/artists/1280/albums')
+          .send({ year: 2000 })
+          .then((res) => {
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The album could not be found');
+            done();
+          })
+      })
     })
 
-
   });
+  
 });
