@@ -73,4 +73,32 @@ describe('/songs', () => {
         });
       });
   });
+  describe('with albums in the database', () => {
+    let songs;
+    beforeEach((done) => {
+      Promise.all([
+        Song.create({ name: 'Ten years gone', artistId: artist.id, albumId: album.id }),
+        Song.create({ name: 'Walk of life', artistId: artist.id, albumId: album.id })
+      ]).then((documents) => {
+        songs = documents;
+        done();
+      })
+    })
+
+    describe('GET /albums/:albumId/songs', () => {
+      it('gets all songs by album', (done) => {
+        request(app)
+          .get(`/albums/${album.id}/song`)
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body.length).to.equal(2);
+            res.body.forEach((song) => {
+              const expected = songs.find((a) => a.id === song.id);
+              expect(song.name).to.equal(expected.name);
+            });
+            done();
+          })
+      })
+    })
+  })
 });
