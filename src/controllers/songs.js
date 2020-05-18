@@ -1,3 +1,5 @@
+/* src/controllers/songs.js */
+
 const { Album } = require('../sequelize');
 const { Song } = require('../sequelize');
 
@@ -17,7 +19,8 @@ exports.createsSong = (req, res) => {
         return res.status(201).json(song);
       })
     }
-  })
+  });
+ 
 };
 
 

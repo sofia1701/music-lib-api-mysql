@@ -56,4 +56,21 @@ describe('/songs', () => {
         });
     });
   });
+  it('returns a 404 and does not create a song if the album does not exist', (done) => {
+    request(app)
+      .post('/albums/1234/song')
+      .send({
+        artist: artist.id,
+        name: 'Solitude Is Bliss',
+      })
+      .then((res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body.error).to.equal('The album could not be found.');
+
+        Song.findAll().then((songs) => {
+          expect(songs.length).to.equal(0);
+          done();
+        });
+      });
+  });
 });
