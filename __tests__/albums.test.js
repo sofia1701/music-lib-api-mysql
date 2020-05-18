@@ -106,6 +106,8 @@ describe('/albums', () => {
           });
       });
     }) 
+
+    //add 1 more test to find 1 single album by artist
      
     describe('PATCH /artists/:albumId/albums', () => {
       it('updates album year by album id', (done) => {
