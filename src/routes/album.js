@@ -10,6 +10,8 @@ router.post('/:albumId/song', songController.createsSong);
 
 router.get('/:albumId/song', songController.listSongsByAlbum);
 
+router.patch('/:albumId/song', songController.updatesSongByAlbum);
+
 module.exports = router;
 
 

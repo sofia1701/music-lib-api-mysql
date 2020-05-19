@@ -99,13 +99,30 @@ describe('/songs', () => {
             done();
           })
       })
-      it('returns a 404 if the album does not exist', () => {
+      it('returns a 404 if the album does not exist', (done) => {
         request(app)
           .get('/albums/12345/song')
           .then((res) => {
             expect(res.status).to.equal(404);
             expect(res.body.error).to.equal('The album could not be found.');
             done();
+          })
+      })
+    })
+
+    describe('PATCH /albums/:albumId/songs',() => {
+      it('updates song name by album id', (done) => {
+        const song = songs[0];
+        request(app)
+          .patch(`/albums/${album.id}/song`)
+          .send({ name: 'Tangerine' })
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            Song.findByPk(song.id, { raw: true })
+             .then((updatedSong) => {
+               expect(updatedSong.name).to.equal('Tangerine');
+               done();
+             })
           })
       })
     })

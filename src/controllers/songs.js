@@ -35,4 +35,16 @@ exports.listSongsByAlbum = (req,res) => {
   })
 };
 
+exports.updatesSongByAlbum = (req,res) => {
+  const { albumId } = req.params;
+  Album.findByPk(albumId).then(album => {
+    if(!album) {
+      return res.status(404).json({ error: 'The album could not be found.' });
+    }else{
+      Song.update(req.body, { where: {albumId} })
+      .then(updatedSong => res.status(200).json(updatedSong));
+    };
+  })
+}
+
 
