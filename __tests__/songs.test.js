@@ -99,6 +99,15 @@ describe('/songs', () => {
             done();
           })
       })
+      it('returns a 404 if the album does not exist', () => {
+        request(app)
+          .get('/albums/12345/song')
+          .then((res) => {
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The album could not be found.');
+            done();
+          })
+      })
     })
   })
 });
