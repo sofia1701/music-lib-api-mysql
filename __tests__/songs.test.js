@@ -110,6 +110,8 @@ describe('/songs', () => {
       })
     })
 
+    //get songs by artist
+
     describe('PATCH /albums/:albumId/songs',() => {
       it('updates song name by album id', (done) => {
         const song = songs[0];
@@ -137,7 +139,23 @@ describe('/songs', () => {
       })
     })
 
-    describe('DELETE /albums/:albumId/albums', () => {
+    describe('DELETE /albums/:songId/song', () => {
+      it('deletes song record by id', (done) => {
+        const song = songs[0];
+        request(app)
+         .delete(`/albums/${song.id}`)
+         .then((res) => {
+           expect(res.status).to.equal(204)
+           Song.findByPk(song.id, { raw: true })
+            .then((updatedSong) => {
+              expect(updatedSong).to.equal(null);
+              done();
+            })  
+         })
+      })
+    })
+
+    describe('DELETE /albums/:albumId/songs', () => {
       it('deletes song record by album id', (done) => {
         const song = songs[0];
         request(app)

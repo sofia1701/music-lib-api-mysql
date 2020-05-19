@@ -45,7 +45,19 @@ exports.updatesSongByAlbum = (req,res) => {
       .then(updatedSong => {return res.status(200).json(updatedSong)});
     };
   })
-}
+};
+
+exports.deletesSongById = (req, res) => {
+  const { songId } = req.params;
+  Song.findByPk(songId).then(song => {
+    if(!song) {
+      return res.status(404).json({ error: 'The song could not be found.' });
+    }else{
+      Song.destroy({ where: {id: songId} })
+      .then(updatedSong => {return res.status(204).json(updatedSong)});
+    };
+  })
+};
 
 exports.deletesSongByAlbum = (req, res) => {
   const { albumId } = req.params;

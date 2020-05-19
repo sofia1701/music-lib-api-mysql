@@ -12,6 +12,8 @@ router.get('/:albumId/song', songController.listSongsByAlbum);
 
 router.patch('/:albumId/song', songController.updatesSongByAlbum);
 
+router.delete('/:songId', songController.deletesSongById)
+
 router.delete('/:albumId/song', songController.deletesSongByAlbum);
 
 module.exports = router;
