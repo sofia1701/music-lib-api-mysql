@@ -1,8 +1,10 @@
 /* src/routes/artist.js */
 
 const express = require('express');
+
 const artistController = require('../controllers/artists');
 const albumController = require('../controllers/albums');
+const songController = require('../controllers/songs')
 
 const router = express.Router();
 
@@ -22,9 +24,7 @@ router.post('/:artistId/albums', albumController.createAlbum);
 
 router.get('/:artistId/albums', albumController.listAllAlbumsByArtist);
 
-router.patch('/:albumId/albums', albumController.updatesAlbumByID);
 
-router.delete('/:albumId/albums', albumController.deletesAlbumById);
-
+router.get('/:artistId/songs', songController.listSongsByArtist);
 
 module.exports = router;
