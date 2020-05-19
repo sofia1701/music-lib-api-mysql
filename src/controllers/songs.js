@@ -30,7 +30,7 @@ exports.listSongsByAlbum = (req,res) => {
       return res.status(404).json({ error: 'The album could not be found.' });
     }else{
       Song.findAll({ where: {albumId} })
-      .then(songs => res.status(200).json(songs));
+      .then(songs => {return res.status(200).json(songs)});
     };
   })
 };
@@ -42,9 +42,19 @@ exports.updatesSongByAlbum = (req,res) => {
       return res.status(404).json({ error: 'The album could not be found.' });
     }else{
       Song.update(req.body, { where: {albumId} })
-      .then(updatedSong => res.status(200).json(updatedSong));
+      .then(updatedSong => {return res.status(200).json(updatedSong)});
     };
   })
 }
 
-
+exports.deletesSongByAlbum = (req, res) => {
+  const { albumId } = req.params;
+  Album.findByPk(albumId).then(album => {
+    if(!album) {
+      return res.status(404).json({ error: 'The album could not be found.' });
+    }else{
+      Song.destroy({ where: {albumId} })
+      .then(updatedSong => {return res.status(204).json(updatedSong)});
+    };
+  })
+};
