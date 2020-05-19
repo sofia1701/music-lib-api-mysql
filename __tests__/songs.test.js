@@ -125,6 +125,16 @@ describe('/songs', () => {
              })
           })
       })
+      it('returns a 404 if the album does not exist', (done) => {
+        request(app)
+         .patch('/albums/12345/song')
+         .send({ name: 'Tangerine' })
+         .then((res) => {
+           expect(res.status).to.equal(404);
+           expect(res.body.error).to.equal('The album could not be found.');
+           done();
+         })
+      })
     })
   })
 });
