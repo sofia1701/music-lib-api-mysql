@@ -30,7 +30,7 @@ exports.listAllAlbumsByArtist = (req, res) => {
     if(!artist) {
       return res.status(404).json({ error: 'The artist could not be found.' });
     }else{
-     Album.findAll({ where: {artistId} }).then(albums => res.status(200).json(albums));
+     Album.findAll({ include: [{ model: Artist, as: 'artist', where: {id: artistId} }]  }).then(albums => res.status(200).json(albums));
     };
   })
 };
