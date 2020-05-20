@@ -29,7 +29,7 @@ exports.listSongsByAlbum = (req,res) => {
     if(!album) {
       return res.status(404).json({ error: 'The album could not be found.' });
     }else{
-      Song.findAll({ where: {albumId} })
+      Song.findAll({ include: [{ model: Album, as: 'album', where: {id: albumId} }] })
       .then(songs => {return res.status(200).json(songs)});
     };
   })
