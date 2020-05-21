@@ -3,7 +3,7 @@ const { Artist } = require('../sequelize');
 const { Album } = require('../sequelize');
 const { Song } = require('../sequelize');
 
-exports.createsSong = (req, res) => {
+exports.createSong = (req, res) => {
   const { albumId } = req.params;
 
   Album.findByPk(albumId).then((album) => {
@@ -20,23 +20,26 @@ exports.createsSong = (req, res) => {
       })
     }
   });
- 
 };
 
-exports.listSongsByAlbum = (req,res) => {
+exports.getSongsByAlbum = (req,res) => {
   const { albumId } = req.params;
   Album.findByPk(albumId).then(album => {
     if(!album) {
       return res.status(404).json({ error: 'The album could not be found.' });
     }else{
       Song.findAll({ 
-        include: [{ model: Album, as: 'album', where: {id: albumId} }, { model: Artist, as: 'artist', where: {id: album.artistId} }] })
-        .then(songs => {return res.status(200).json(songs)});
+        include: [
+          { model: Album, as: 'album', where: {id: albumId} }, 
+          { model: Artist, as: 'artist', where: {id: album.artistId} }
+        ] 
+      })
+      .then(songs => {return res.status(200).json(songs)});
     };
   })
 };
 
-exports.listSongsByArtist = (req, res) => {
+exports.getSongsByArtist = (req, res) => {
   const { artistId } = req.params;
   Artist.findByPk(artistId).then(artist => {
     if(!artist) {
@@ -48,7 +51,7 @@ exports.listSongsByArtist = (req, res) => {
   })
 }
 
-exports.updatesSongByAlbum = (req,res) => {
+exports.updateSongByAlbum = (req,res) => {
   const { albumId } = req.params;
   Album.findByPk(albumId).then(album => {
     if(!album) {
@@ -60,7 +63,7 @@ exports.updatesSongByAlbum = (req,res) => {
   })
 };
 
-exports.updatesSongById = (req, res) => {
+exports.updateSongById = (req, res) => {
   const { songId } = req.params;
   Song.findByPk(songId).then(song => {
     if(!song) {
@@ -72,26 +75,26 @@ exports.updatesSongById = (req, res) => {
   })
 }
 
-exports.deletesSongById = (req, res) => {
+exports.deleteSongById = (req, res) => {
   const { songId } = req.params;
   Song.findByPk(songId).then(song => {
     if(!song) {
       return res.status(404).json({ error: 'The song could not be found.' });
     }else{
       Song.destroy({ where: {id: songId} })
-      .then(updatedSong => {return res.status(204).json(updatedSong)});
+      .then(deletedSong => {return res.status(204).json(deletedSong)});
     };
   })
 };
 
-exports.deletesSongByAlbum = (req, res) => {
+exports.deleteSongByAlbum = (req, res) => {
   const { albumId } = req.params;
   Album.findByPk(albumId).then(album => {
     if(!album) {
       return res.status(404).json({ error: 'The album could not be found.' });
     }else{
       Song.destroy({ where: {albumId} })
-      .then(updatedSong => {return res.status(204).json(updatedSong)});
+      .then(deletedSong => {return res.status(204).json(deletedSong)});
     };
   })
 };

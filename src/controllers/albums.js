@@ -23,7 +23,7 @@ exports.createAlbum = (req, res) => {
   }); 
 };
 
-exports.listAllAlbumsByArtist = (req, res) => {
+exports.getAlbumsByArtist = (req, res) => {
   const { artistId } = req.params;
   Artist.findOne({ where: { id: artistId} })
   .then(artist => {
@@ -36,7 +36,7 @@ exports.listAllAlbumsByArtist = (req, res) => {
   })
 };
 
-exports.updatesAlbumByID = (req, res) => {
+exports.updateAlbumByID = (req, res) => {
   const { albumId } = req.params;
   Album.update(req.body, {where: { id: albumId }})
   .then(([updatedAlbum]) => {
@@ -47,14 +47,14 @@ exports.updatesAlbumByID = (req, res) => {
   })
 };
 
-exports.deletesAlbumById = (req, res) => {
+exports.deleteAlbumById = (req, res) => {
   const { albumId } = req.params;
   Album.destroy({ where: { id: albumId }})
-  .then(updatedAlbum => {
-    if(!updatedAlbum) {
+  .then(deletedAlbum => {
+    if(!deletedAlbum) {
       return res.status(404).json({ error: 'The album could not be found' })
     }
-    return res.status(204).json(updatedAlbum);
+    return res.status(204).json(deletedAlbum);
   })
 };
 

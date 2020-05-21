@@ -37,10 +37,10 @@ describe('/songs', () => {
     }
   });
 
-  describe('POST /album/:albumId/song', () => {
+  describe('POST /album/:albumId/songs', () => {
     it('creates a new song under an album', (done) => {
       request(app)
-        .post(`/albums/${album.id}/song`)
+        .post(`/albums/${album.id}/songs`)
         .send({
           artist: artist.id,
           name: 'Solitude Is Bliss',
@@ -58,7 +58,7 @@ describe('/songs', () => {
   });
   it('returns a 404 and does not create a song if the album does not exist', (done) => {
     request(app)
-      .post('/albums/1234/song')
+      .post('/albums/1234/songs')
       .send({
         artist: artist.id,
         name: 'Solitude Is Bliss',
@@ -139,7 +139,7 @@ describe('/songs', () => {
       it('updates song name by album id', (done) => {
         const song = songs[0];
         request(app)
-          .patch(`/albums/${album.id}/song`)
+          .patch(`/albums/${album.id}/songs`)
           .send({ name: 'Tangerine' })
           .then((res) => {
             expect(res.status).to.equal(200);
@@ -152,7 +152,7 @@ describe('/songs', () => {
       })
       it('returns a 404 if the album does not exist', (done) => {
         request(app)
-         .patch('/albums/12345/song')
+         .patch('/albums/12345/songs')
          .send({ name: 'Tangerine' })
          .then((res) => {
            expect(res.status).to.equal(404);
@@ -219,7 +219,7 @@ describe('/songs', () => {
       it('deletes song record by album id', (done) => {
         const song = songs[0];
         request(app)
-         .delete(`/albums/${album.id}/song`)
+         .delete(`/albums/${album.id}/songs`)
          .then((res) => {
            expect(res.status).to.equal(204)
            Song.findByPk(song.id, { raw: true })
@@ -231,7 +231,7 @@ describe('/songs', () => {
       })
       it('returns a 404 if the album does not exist', (done) => {
         request(app)
-          .delete('/albums/12345/song')
+          .delete('/albums/12345/songs')
           .then((res) => {
             expect(res.status).to.equal(404);
             expect(res.body.error).to.equal('The album could not be found.');

@@ -6,8 +6,9 @@ const songController = require('../controllers/songs')
 
 const router = express.Router();
 
-router.patch('/:songId', songController.updatesSongById)
 
-router.delete('/:songId', songController.deletesSongById)
+router.route('/:songId')
+  .patch(songController.updateSongById)
+  .delete(songController.deleteSongById);
 
 module.exports = router;

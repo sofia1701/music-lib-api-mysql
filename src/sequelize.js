@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+
 const ArtistModel = require('./models/artist');
 const AlbumModel = require('./models/album');
 const SongModel = require('./models/song');

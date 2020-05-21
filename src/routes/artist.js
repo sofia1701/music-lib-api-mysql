@@ -9,22 +9,19 @@ const songController = require('../controllers/songs')
 const router = express.Router();
 
 
-router.post('/', artistController.createsArtist);
+router.route('/')
+  .post(artistController.createArtist)
+  .get(artistController.getArtists);
 
-router.get('/',  artistController.listArtists);
+router.route('/:artistId')
+  .get(artistController.getArtistById)
+  .patch(artistController.updateArtistById)
+  .delete(artistController.deleteArtist);
 
-router.get('/:artistId', artistController.getArtistById);
+router.route('/:artistId/albums')
+  .post(albumController.createAlbum)
+  .get(albumController.getAlbumsByArtist);
 
-router.patch('/:artistId', artistController.updatesArtistById);
-
-router.delete('/:artistId', artistController.deletesArtist);
-
-
-router.post('/:artistId/albums', albumController.createAlbum);
-
-router.get('/:artistId/albums', albumController.listAllAlbumsByArtist);
-
-
-router.get('/:artistId/songs', songController.listSongsByArtist);
+router.route('/:artistId/songs').get(songController.getSongsByArtist);
 
 module.exports = router;

@@ -2,11 +2,11 @@
 
 const { Artist } = require('../sequelize');
 
-exports.createsArtist = (req, res) => {
-  Artist.create(req.body).then(user => res.status(201).json(user));
+exports.createArtist = (req, res) => {
+  Artist.create(req.body).then(artist => res.status(201).json(artist));
 };
 
-exports.listArtists = (req, res) => {
+exports.getArtists = (req, res) => {
   Artist.findAll().then(artists => res.status(200).json(artists));
 };
 
@@ -21,7 +21,7 @@ exports.getArtistById = (req, res) => {
   });
 };
 
-exports.updatesArtistById = (req, res) => {
+exports.updateArtistById = (req, res) => {
   const { artistId } = req.params;
   Artist.update(req.body, { where: { id: artistId } })
   .then(([updatedArtist]) => {
@@ -32,17 +32,13 @@ exports.updatesArtistById = (req, res) => {
   });
 };
 
-exports.deletesArtist = (req, res) => {
+exports.deleteArtist = (req, res) => {
   const { artistId } = req.params;
   Artist.destroy({ where: { id: artistId } })
-  .then(updatedArtist => {
-    if(!updatedArtist) {
+  .then(deletedArtist => {
+    if(!deletedArtist) {
       return res.status(404).json({ error: 'The artist could not be found.' })
     }
-    return res.status(204).json(updatedArtist);
+    return res.status(204).json(deletedArtist);
   })
 };
-
-/*When a return statement is used in a function body, 
-the execution of the function is stopped. If specified, 
-a given value is returned to the function caller.*/
