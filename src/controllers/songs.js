@@ -1,7 +1,5 @@
 /* src/controllers/songs.js */
-const { Artist } = require('../sequelize');
-const { Album } = require('../sequelize');
-const { Song } = require('../sequelize');
+const { Artist, Album, Song } = require('../sequelize');
 
 exports.createSong = (req, res) => {
   const { albumId } = req.params;

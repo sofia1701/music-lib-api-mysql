@@ -17,6 +17,9 @@ router.route('/:albumId/songs')
   .patch(songController.updateSongByAlbum)
   .delete(songController.deleteSongByAlbum);
 
+router.route('/:albumYear')
+  .get(albumController.getAlbumsByYear)
+  
 module.exports = router;
 
 

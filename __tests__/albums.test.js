@@ -72,7 +72,7 @@ describe('/albums', () => {
     let albums;
     beforeEach((done) => {
       Promise.all([
-        Album.create({ name: 'Physical Graffiti', year: 1975, artistId: artist.id }),
+        Album.create({ name: 'Physical Graffiti', year: 1978, artistId: artist.id }),
         Album.create({ name: 'Brothers in Arms', year: 1985, artistId: artist.id }),
       ]).then((documents) => {
         albums = documents;
@@ -105,7 +105,25 @@ describe('/albums', () => {
           });
       });
     }) 
-     
+    
+    describe('GET /albums/:albumYear', () => {
+      it('gets all albums by released year', (done) => {
+        const album = albums[0]
+        request(app)
+          .get(`/albums/${album.year}`)
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            Album.findAll({ where: { year: album.year} })
+             .then(album => {
+              expect(res.body.name).to.equal(album.name);
+              expect(res.body.year).to.equal(album.year);
+              done();
+            })  
+          });
+      });
+    });
+
+
     describe('PATCH /albums/:albumId', () => {
       it('updates album year by album id', (done) => {
         const album = albums[0];

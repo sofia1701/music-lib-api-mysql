@@ -1,7 +1,5 @@
 /* src/controllers/album.js */
-
-const { Album } = require('../sequelize');
-const { Artist } = require('../sequelize');
+const { Album, Artist } = require('../sequelize');
 
 exports.createAlbum = (req, res) => {
   const { artistId } = req.params;
@@ -31,8 +29,18 @@ exports.getAlbumsByArtist = (req, res) => {
       return res.status(404).json({ error: 'The artist could not be found.' });
     }else{
      Album.findAll({ include: [{ model: Artist, as: 'artist', where: {id: artistId} }]  })
-     .then(albums => res.status(200).json(albums));
+     .then(albums => {
+       return res.status(200).json(albums);
+     })
     };
+  })
+};
+
+exports.getAlbumsByYear = (req, res) => {
+  const { albumYear } = req.params;
+  Album.findAll({ where: { year: albumYear} })
+  .then(albums => {
+    return res.status(200).json(albums);
   })
 };
 

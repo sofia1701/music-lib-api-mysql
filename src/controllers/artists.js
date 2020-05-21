@@ -1,5 +1,4 @@
 /* src/controllers/artist.js */
-
 const { Artist } = require('../sequelize');
 
 exports.createArtist = (req, res) => {
