@@ -121,6 +121,15 @@ describe('/albums', () => {
             })  
           });
       });
+      it('returns a 404 if there is no album released on specific year', (done) => {
+        request(app)
+         .get('/albums/2020')
+         .then((res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.error).to.equal('No albums have been released in 2020');
+          done();
+         })
+      })
     });
 
 

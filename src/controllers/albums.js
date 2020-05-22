@@ -38,9 +38,15 @@ exports.getAlbumsByArtist = (req, res) => {
 
 exports.getAlbumsByYear = (req, res) => {
   const { albumYear } = req.params;
-  Album.findAll({ where: { year: albumYear} })
-  .then(albums => {
-    return res.status(200).json(albums);
+  Album.findOne({ where: { year: albumYear} })
+  .then((albums) => {
+    if(!albums) {
+      return res.status(404).json({ error: `No albums have been released in ${albumYear}` });
+    }
+    Album.findAll({ where: { year: albumYear}, include: [{ model: Artist, as: 'artist' }] })
+    .then(albumsYear => {
+      return res.status(200).json(albumsYear);
+    }) 
   })
 };
 
